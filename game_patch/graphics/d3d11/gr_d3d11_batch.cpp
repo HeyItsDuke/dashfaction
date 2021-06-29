@@ -10,6 +10,8 @@ namespace df::gr::d3d11
     constexpr int batch_max_vertex = 6000;
     constexpr int batch_max_index = 10000;
 
+    float& zm = addr_as_ref<float>(0x005A7DD8);
+
     BatchManager::BatchManager(ComPtr<ID3D11Device> device, ComPtr<ID3D11DeviceContext> context, RenderContext& render_context) :
         device_{std::move(device)}, context_{std::move(context)}, render_context_(render_context)
     {
@@ -145,7 +147,7 @@ namespace df::gr::d3d11
             auto& out_vert = mapped_vb_[current_vertex_];
             out_vert.x = (in_vert.sx - gr::screen.offset_x) / gr::screen.clip_width * 2.0f - 1.0f;
             out_vert.y = (in_vert.sy - gr::screen.offset_y) / gr::screen.clip_height * -2.0f + 1.0f;
-            out_vert.z = in_vert.sw * d3d11_zm;
+            out_vert.z = in_vert.sw * zm;
             if (vertex_attributes & gr::TMAP_FLAG_RGB) {
                 r = in_vert.r;
                 g = in_vert.g;
