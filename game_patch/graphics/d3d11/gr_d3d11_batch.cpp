@@ -1,6 +1,7 @@
 #include <cassert>
 #include "gr_d3d11.h"
 #include "gr_d3d11_batch.h"
+#include "gr_d3d11_shader.h"
 #include "gr_d3d11_context.h"
 
 using namespace rf;
@@ -13,11 +14,13 @@ namespace df::gr::d3d11
     auto& zm = addr_as_ref<float>(0x005A7DD8);
     auto& one_over_matrix_scale_z = addr_as_ref<float>(0x01818A60);
 
-    BatchManager::BatchManager(ComPtr<ID3D11Device> device, ComPtr<ID3D11DeviceContext> context, RenderContext& render_context) :
-        device_{std::move(device)}, context_{std::move(context)}, render_context_(render_context)
+    BatchManager::BatchManager(ComPtr<ID3D11Device> device, ShaderManager& shader_manager, RenderContext& render_context) :
+        device_{std::move(device)}, context_{render_context.device_context()}, render_context_(render_context)
     {
         create_dynamic_vb();
         create_dynamic_ib();
+        vertex_shader_ = shader_manager.get_vertex_shader(VertexShaderId::transformed);
+        pixel_shader_ = shader_manager.get_pixel_shader(PixelShaderId::standard);
     }
 
     void BatchManager::create_dynamic_vb()
@@ -182,7 +185,7 @@ namespace df::gr::d3d11
     {
         render_context_.set_vertex_buffer(dynamic_vb_, sizeof(GpuTransformedVertex));
         render_context_.set_index_buffer(dynamic_ib_);
-        render_context_.set_shader_program(ShaderProgram::transformed);
-        render_context_.set_vertex_transform_type(VertexTransformType::_2d);
+        render_context_.set_vertex_shader(vertex_shader_);
+        render_context_.set_pixel_shader(pixel_shader_);
     }
 }
