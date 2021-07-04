@@ -48,6 +48,8 @@ BOOL OptionsDlg::OnInitDialog()
     CheckDlgButton(IDC_HIGH_MON_RES_CHECK, m_conf.high_monitor_res ? BST_CHECKED : BST_UNCHECKED);
     CheckDlgButton(IDC_TRUE_COLOR_TEXTURES_CHECK, m_conf.true_color_textures ? BST_CHECKED : BST_UNCHECKED);
     CheckDlgButton(IDC_BIG_HUD_CHECK, m_conf.big_hud ? BST_CHECKED : BST_UNCHECKED);
+    bool d3d11 = m_conf.renderer == GameConfig::Renderer::d3d11;
+    CheckDlgButton(IDC_D3D11_CHECK, d3d11 ? BST_CHECKED : BST_UNCHECKED);
 
     SetDlgItemTextA(IDC_TRACKER_EDIT, m_conf.tracker->c_str());
     CheckDlgButton(IDC_FORCE_PORT_CHECK, m_conf.force_port != 0);
@@ -206,6 +208,7 @@ void OptionsDlg::InitToolTip()
     m_tool_tip.AddTool(GetDlgItem(IDC_HIGH_MON_RES_CHECK), "Increase monitors and mirrors resolution");
     m_tool_tip.AddTool(GetDlgItem(IDC_TRUE_COLOR_TEXTURES_CHECK), "Increase texture color depth - especially visible for lightmaps and shadows");
     m_tool_tip.AddTool(GetDlgItem(IDC_BIG_HUD_CHECK), "Make HUD bigger in the game");
+    m_tool_tip.AddTool(GetDlgItem(IDC_D3D11_CHECK), "Use experimental Direct3D 11 renderer");
     m_tool_tip.AddTool(GetDlgItem(IDC_TRACKER_EDIT), "Hostname of tracker used to find avaliable Multiplayer servers");
     m_tool_tip.AddTool(GetDlgItem(IDC_RATE_EDIT), "Internet connection speed in bytes/s (default value - 200000 - should work fine for all modern setups)");
     m_tool_tip.AddTool(GetDlgItem(IDC_FAST_START_CHECK), "Skip game intro videos and go straight to Main Menu");
@@ -311,6 +314,8 @@ void OptionsDlg::OnBnClickedOk()
     m_conf.high_monitor_res = (IsDlgButtonChecked(IDC_HIGH_MON_RES_CHECK) == BST_CHECKED);
     m_conf.true_color_textures = (IsDlgButtonChecked(IDC_TRUE_COLOR_TEXTURES_CHECK) == BST_CHECKED);
     m_conf.big_hud = (IsDlgButtonChecked(IDC_BIG_HUD_CHECK) == BST_CHECKED);
+    bool d3d11 = IsDlgButtonChecked(IDC_D3D11_CHECK) == BST_CHECKED;
+    m_conf.renderer = d3d11 ? GameConfig::Renderer::d3d11 : GameConfig::Renderer::legacy;
 
     str = GetDlgItemTextA(IDC_TRACKER_EDIT);
     m_conf.tracker = str.GetString();

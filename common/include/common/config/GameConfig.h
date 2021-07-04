@@ -34,6 +34,13 @@ struct GameConfig
     CfgVar<unsigned> msaa = 0;
     CfgVar<unsigned> geometry_cache_size{32, [](auto val) { return std::clamp(val, 2u, 32u); }};
 
+    enum class Renderer
+    {
+        legacy = 0,
+        d3d11 = 1,
+    };
+    CfgVar<Renderer> renderer = Renderer::legacy;
+
     static constexpr unsigned min_fps_limit = 10u;
     static constexpr unsigned max_fps_limit = 240u;
     CfgVar<unsigned> max_fps{60, [](auto val) { return std::clamp(val, min_fps_limit, max_fps_limit); }};
