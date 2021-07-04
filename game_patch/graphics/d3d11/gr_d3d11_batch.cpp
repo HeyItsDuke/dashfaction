@@ -13,8 +13,6 @@ namespace df::gr::d3d11
     constexpr int batch_max_index = 10000;
 
     static auto& zm = addr_as_ref<float>(0x005A7DD8);
-    static auto& one_over_matrix_scale_z = addr_as_ref<float>(0x01818A60);
-    static auto& gr_matrix_scale = addr_as_ref<Vector3>(0x01818B48);
 
     BatchManager::BatchManager(ComPtr<ID3D11Device> device, ShaderManager& shader_manager, RenderContext& render_context) :
         device_{device}, render_context_(render_context),
@@ -76,7 +74,7 @@ namespace df::gr::d3d11
             color.alpha = gr::screen.current_color.alpha;
         }
         // Note: gr_matrix_scale is zero before first gr_setup_3d call
-        float matrix_scale_z = gr_matrix_scale.z ? gr_matrix_scale.z : 1.0f;
+        float matrix_scale_z = gr::matrix_scale.z ? gr::matrix_scale.z : 1.0f;
         for (int i = 0; i < nv; ++i) {
             const gr::Vertex& in_vert = *vertices[i];
             GpuTransformedVertex& out_vert = gpu_verts[i];
@@ -120,7 +118,7 @@ namespace df::gr::d3d11
         auto [gpu_ind_ptr, base_index] = index_ring_buffer_.alloc(2);
 
         // Note: gr_matrix_scale is zero before first gr_setup_3d call
-        float matrix_scale_z = gr_matrix_scale.z ? gr_matrix_scale.z : 1.0f;
+        float matrix_scale_z = gr::matrix_scale.z ? gr::matrix_scale.z : 1.0f;
         for (int i = 0; i < 2; ++i) {
             const gr::Vertex& in_vert = *vertices[i];
             GpuTransformedVertex& out_vert = gpu_verts[i];

@@ -104,7 +104,7 @@ namespace df::gr::d3d11
         int w, h, num_pixels, mip_levels;
         bm::get_mipmap_info(bm_handle, &w, &h, &num_pixels, &mip_levels);
         if (w <= 0 || h <= 0) {
-            xlog::warn("Bad bitmap dimensions: handle %d", bm_handle);
+            xlog::warn("Bad bitmap dimensions: handle %d filename %s dimensions %dx%d", bm_handle, bm::get_filename(bm_handle), w, h);
             return {};
         }
 

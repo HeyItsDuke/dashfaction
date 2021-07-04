@@ -71,12 +71,12 @@ namespace df::gr::d3d11
             {0.0f, 0.0f, -q * z_near, 0.0f},
         }};
     #else // rf projection, normalized _34 element
-        const rf::Vector3& scale_vec = rf::gr::d3d::scale_vec;
-        float zm = rf::gr::d3d::zm;
+        using rf::gr::matrix_scale;
+        using rf::gr::d3d::zm;
         return {{
-            {scale_vec.x / scale_vec.z, 0.0f, 0.0f, 0.0f},
-            {0.0f, scale_vec.y / scale_vec.z, 0.0f, 0.0f},
-            {0.0f, 0.0f, 0.0f, zm / scale_vec.z},
+            {matrix_scale.x / matrix_scale.z, 0.0f, 0.0f, 0.0f},
+            {0.0f, matrix_scale.y / matrix_scale.z, 0.0f, 0.0f},
+            {0.0f, 0.0f, 0.0f, zm / matrix_scale.z},
             {0.0f, 0.0f, 1.0f, 0.0f},
         }};
     #endif

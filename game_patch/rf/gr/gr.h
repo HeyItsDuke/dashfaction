@@ -321,6 +321,8 @@ namespace rf::gr
     static auto& light_base = addr_as_ref<Vector3>(0x01818A28);
     static auto& eye_pos = addr_as_ref<Vector3>(0x01818680);
     static auto& eye_matrix = addr_as_ref<Matrix3>(0x01818A00);
+    static auto& matrix_scale = addr_as_ref<Vector3>(0x01818B48);
+    static auto& one_over_matrix_scale_z = addr_as_ref<float>(0x01818A60);
 
     static auto& screen_width = addr_as_ref<int()>(0x0050C640);
     static auto& screen_height = addr_as_ref<int()>(0x0050C650);
