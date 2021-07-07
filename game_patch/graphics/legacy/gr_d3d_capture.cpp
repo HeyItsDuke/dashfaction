@@ -53,6 +53,7 @@ bool gr_d3d_set_render_target(int bmh)
         g_orig_render_target.release();
         g_orig_depth_stencil_surface.release();
         g_render_to_texture_active = false;
+        return true;
     }
 
     // Note: texture reference counter is not increased here so ComPtr is not used

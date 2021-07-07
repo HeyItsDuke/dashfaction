@@ -357,6 +357,7 @@ bool gr_d3d_is_texture_format_supported(rf::bm::Format format)
 static FunHook<void(int)> gr_d3d_mark_texture_dirty_hook{
     0x0055CDC0,
     [](int bm_handle) {
+        gr_d3d_mark_texture_dirty_hook.call_target(bm_handle);
         // Release texture object immediately after this call instead of waiting for the next bitmap handle usage
         auto bm_index = rf::bm::get_cache_slot(bm_handle);
         auto& tslot = rf::gr::d3d::textures[bm_index];
