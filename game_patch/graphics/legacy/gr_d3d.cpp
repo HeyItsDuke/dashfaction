@@ -10,6 +10,7 @@
 #include <xlog/xlog.h>
 #include <common/utils/os-utils.h>
 #include "../../rf/gr/gr.h"
+#include "../../rf/gr/gr_font.h"
 #include "../../rf/gr/gr_direct3d.h"
 #include "../../rf/os/os.h"
 #include "../../rf/multi.h"
