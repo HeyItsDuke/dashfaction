@@ -182,12 +182,15 @@ namespace rf
     struct GFaceAttributes
     {
         uint flags;
-        GTextureMover *texture_mover; // only used by rendering cache code
-        int bitmap_handle;
+        union {
+            int group_id; // temporary variable used for face grouping/sorting
+            GTextureMover* texture_mover;
+        };
+        int bitmap_id;
         short portal_id; // portal index + 2 or 0
         short surface_index;
         int face_id;
-        int group_id; // bitfield of smoothing groups
+        int smoothing_groups; // bitfield of smoothing groups
 
         bool is_show_sky() const
         {

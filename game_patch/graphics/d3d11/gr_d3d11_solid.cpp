@@ -277,7 +277,7 @@ namespace df::gr::d3d11
         Vector3 normal = face->plane.normal;
         bool normalize = false;
         for (GFace* adj_face : fvert->vertex->adjacent_faces) {
-            if (adj_face != face && (adj_face->attributes.group_id & face->attributes.group_id) != 0) {
+            if (adj_face != face && (adj_face->attributes.smoothing_groups & face->attributes.smoothing_groups) != 0) {
                 normal += adj_face->plane.normal;
                 normalize = true;
             }
@@ -327,7 +327,7 @@ namespace df::gr::d3d11
             return;
         }
         FaceRenderType render_type = determine_face_render_type(face);
-        int face_tex = face->attributes.bitmap_handle;
+        int face_tex = face->attributes.bitmap_id;
         int lightmap_tex = -1;
         if (face->attributes.surface_index >= 0) {
             GSurface* surface = solid->surfaces[face->attributes.surface_index];
