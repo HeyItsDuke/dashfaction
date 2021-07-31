@@ -436,4 +436,5 @@ namespace rf
     static_assert(sizeof(GProceduralTexture) == 0x38);
 
     static auto& g_cache_clear = addr_as_ref<void()>(0x004F0B90);
+    static auto& g_get_room_render_list = addr_as_ref<void(GRoom ***rooms, int *num_rooms)>(0x004D3330);
 }

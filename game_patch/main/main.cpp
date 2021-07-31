@@ -105,6 +105,7 @@ CodeInjection after_frame_render_hook{
         // Draw on top (after scene)
         frametime_render_ui();
         multi_render_level_download_progress();
+        g_solid_render_ui();
 #if !defined(NDEBUG) && defined(HAS_EXPERIMENTAL)
         experimental_render();
 #endif
